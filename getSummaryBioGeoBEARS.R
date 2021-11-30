@@ -22,7 +22,6 @@ getSummaryBioGeoBEARS <- function(x, tree) {
   
   suppressWarnings(dateNodes(tree)) -> nodes.ages
   round(nodes.ages, 2) -> nodes.ages
-  all.events$age <- nodes.ages
   data.frame(age=nodes.ages, row.names = names(nodes.ages)) -> all.events
   all.events$node <- "tip"
   all.events$node[nodes] <- "node"
