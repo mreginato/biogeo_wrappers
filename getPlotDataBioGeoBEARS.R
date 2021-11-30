@@ -1,5 +1,7 @@
 getPlotDataBioGeoBEARS <- function(x, mat, areas.cols, range.col) {
   
+  require(BioGeoBEARS)
+  
   x -> biogeo
   mat -> tipStates
   
