@@ -1,4 +1,4 @@
-getSummaryBioGeoBEARS <- function(x, tree) {
+getSummaryBioGeoBEARS <- function(x, tree, ranges_list = NULL) {
   require(BioGeoBEARS)
   require(ape)
   require(paleotree)
@@ -8,7 +8,11 @@ getSummaryBioGeoBEARS <- function(x, tree) {
   
   tipranges = getranges_from_LagrangePHYLIP(lgdata_fn=biogeo$inputs$geogfn)
   areas.labs = getareas_from_tipranges_object(tipranges)
-  statenames = areas_list_to_states_list_new(areas.labs, maxareas = biogeo$inputs$max_range_size, include_null_range = T, split_ABC = FALSE)
+  if (is.null(ranges_list)) {
+    statenames = areas_list_to_states_list_new(areas.labs, maxareas = biogeo$inputs$max_range_size, include_null_range = T, split_ABC = FALSE)
+  } else {
+    statenames = ranges_list
+  }
   pie.data = biogeo$ML_marginal_prob_each_state_at_branch_top_AT_node
   colnames(pie.data) <- unlist(statenames)
   data.frame(pie.data[,-1]) -> pie.data
