@@ -1,4 +1,4 @@
-getPlotDataBioGeoBEARS <- function(x, mat, areas.cols, range.col) {
+getPlotDataBioGeoBEARS <- function(x, mat, areas.cols, range.col, ranges_list = NULL) {
   
   require(BioGeoBEARS)
   
@@ -14,7 +14,11 @@ getPlotDataBioGeoBEARS <- function(x, mat, areas.cols, range.col) {
   
   tipranges = getranges_from_LagrangePHYLIP(lgdata_fn=biogeo$inputs$geogfn)
   areas.labs = getareas_from_tipranges_object(tipranges)
-  statenames = areas_list_to_states_list_new(areas.labs, maxareas = biogeo$inputs$max_range_size, include_null_range = T, split_ABC = FALSE)
+  if (is.null(ranges_list)) {
+    statenames = areas_list_to_states_list_new(areas.labs, maxareas = biogeo$inputs$max_range_size, include_null_range = T, split_ABC = FALSE)
+  } else {
+    statenames = ranges_list
+  }
   relprobs_matrix = biogeo$ML_marginal_prob_each_state_at_branch_top_AT_node
   MLstates = get_ML_states_from_relprobs(relprobs_matrix, statenames, returnwhat = "states", if_ties = "takefirst")
   Ntip(tree) -> n.tips
